@@ -12,7 +12,6 @@ import patchSubscribeData from './ssr_data';
 import ReactDOMServer from 'react-dom/server';
 import cookieParser from 'cookie-parser';
 import Cheerio from 'cheerio';
-import merge from 'lodash/merge';
 
 function IsAppUrl(req) {
   var url = req.url;
@@ -237,7 +236,7 @@ function generateSSRData(clientOptions, serverOptions, req, res, renderProps) {
 
       // I'm pretty sure this could be avoided in a more elegant way?
       const data = FastRender.frContext.get().getData();
-      InjectData.pushData(res, 'fast-render-data', merge(data, frData));
+      InjectData.pushData(res, 'fast-render-data', Object.assign(data, frData));
     }
     catch(err) {
       console.error(new Date(), 'error while server-rendering', err.stack);
